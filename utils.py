@@ -6,3 +6,4 @@ def now(fmt = "%H:%M:%S"):
 
 def today(fmt = "%d/%m/%Y"):
     return date.today().strftime(fmt)
+    

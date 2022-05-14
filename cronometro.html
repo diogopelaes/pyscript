@@ -6,15 +6,13 @@
 
     <title>Svelte app</title>
 
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
     
     <script defer src="../build/pyscript.js"></script>
-    <py-env>
-    - paths:
-      - /utils.py
-    </py-env>
   </head>
 
   <body>
@@ -75,21 +73,28 @@
         <a hidden id="fullscreen2" href="#" onclick="javascript:closeFullscreen();"><i class="fa fa-compress fa-lg" aria-hidden="true"></i></a>
       </div>
       <div class="centralizar">
-      <h1 id="hora"></h1>
-      <h2 id="hoje"></h2>
+      <h1 id="cronometro">0:00:00.00</h1>
+      <h1 id="teste">--</h1>
+      <input type="hidden" id="rodar" value="1">
+      <button id="iniciar" class="btn btn-success" type="submit" pys-onClick="run">Iniciar</button>
+      <button hidden id="parar" class="btn btn-danger" type="submit" onclick="javascript:document.getElementById('rodar').value = '0';document.getElementById('iniciar').hidden = false;">Parar</button>
     </div>
-    <py-script>
-from utils import now, today
+<py-script>
+from datetime import datetime as dt
+from datetime import timedelta
 import asyncio
-
-async def foo():
-  while True:
-    output = now()
-    pyscript.write("hora", output)
-    await asyncio.sleep(1)
-
-pyscript.run_until_complete(foo())
-pyscript.write("hoje", today())
-    </py-script>
+global tempo_delta
+tempo_delta = timedelta()
+async def run(*args, **kwargs):
+    inicio = dt.now()
+    Element('parar').element.hidden = False
+    Element('iniciar').element.hidden = True
+    Element('rodar').element.value = '1'
+    while Element('rodar').element.value == '1':
+        tempo = tempo_delta + dt.now() - inicio
+        pyscript.write('cronometro', str(tempo)[:-4])
+        await asyncio.sleep(0.1)
+    tempo_delta = tempo
+</py-script>
   </body>
 </html>
