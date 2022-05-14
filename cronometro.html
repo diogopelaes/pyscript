@@ -17,6 +17,11 @@
 
   <body>
     <script>
+      function para_cronometro(){
+        document.getElementById('rodar').value = '0';
+        document.getElementById('reiniciar').hidden = false;
+        document.getElementById('parar').hidden = true;
+      }
       var elem = document.documentElement;
       function openFullscreen() {
         if (elem.requestFullscreen) {
@@ -74,27 +79,25 @@
       </div>
       <div class="centralizar">
       <h1 id="cronometro">0:00:00.00</h1>
-      <h1 id="teste">--</h1>
       <input type="hidden" id="rodar" value="1">
       <button id="iniciar" class="btn btn-success" type="submit" pys-onClick="run">Iniciar</button>
-      <button hidden id="parar" class="btn btn-danger" type="submit" onclick="javascript:document.getElementById('rodar').value = '0';document.getElementById('iniciar').hidden = false;">Parar</button>
+      <button hidden id="parar" class="btn btn-danger" type="submit" onclick="javascript:para_cronometro();">Parar</button>
+      <button id="reiniciar" hidden class="btn btn-warning" type="submit" pys-onClick="run">Reiniciar</button>
     </div>
 <py-script>
 from datetime import datetime as dt
-from datetime import timedelta
 import asyncio
-global tempo_delta
-tempo_delta = timedelta()
+
 async def run(*args, **kwargs):
     inicio = dt.now()
     Element('parar').element.hidden = False
     Element('iniciar').element.hidden = True
+    Element('reiniciar').element.hidden = True
     Element('rodar').element.value = '1'
     while Element('rodar').element.value == '1':
-        tempo = tempo_delta + dt.now() - inicio
+        tempo = dt.now() - inicio
         pyscript.write('cronometro', str(tempo)[:-4])
         await asyncio.sleep(0.1)
-    tempo_delta = tempo
 </py-script>
   </body>
 </html>
