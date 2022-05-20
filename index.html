@@ -1,95 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-    <title>Relógio</title>
-
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-    
-    <script defer src="../build/pyscript.js"></script>
-    <py-env>
-    - paths:
-      - /utils.py
-    </py-env>
-  </head>
-
-  <body>
-    <script>
-      var elem = document.documentElement;
-      function openFullscreen() {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
-          elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
-          elem.msRequestFullscreen();
-        }
-        document.getElementById('fullscreen1').hidden = true;
-        document.getElementById('fullscreen2').hidden = false;
-      }
-      
-      function closeFullscreen() {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE11 */
-          document.msExitFullscreen();
-        }
-        document.getElementById('fullscreen1').hidden = false;
-        document.getElementById('fullscreen2').hidden = true;
-      }
-      </script>
-      <style>
-        body {
-          margin: 0px;
-          vertical-align: middle;
-          font-family: "Lucida Console", "Courier New", monospace;
-          font-weight: bold;
-          color: orange;
-          background-color: black;
-        }
-        .direita {
-          text-align: right;
-          color: white;
-          padding-top: 25px;
-          padding-right: 50px;
-        }
-        .centralizar {
-          text-align: center;
-          padding-top: 150px;
-        }
-        h1 {
-            font-size: 100px;
-        }
-        h2 {
-            font-size: 50px;
-        }
-      </style>
-      <div class="direita">
-        <a id="fullscreen1" href="#" onclick="javascript:openFullscreen();"><i class="fa fa-expand fa-lg" aria-hidden="true"></i></a>
-        <a hidden id="fullscreen2" href="#" onclick="javascript:closeFullscreen();"><i class="fa fa-compress fa-lg" aria-hidden="true"></i></a>
-      </div>
-      <div class="centralizar">
-      <h1 id="hora"></h1>
-      <h2 id="hoje"></h2>
-    </div>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+         <style>
+            h1 {
+                font-size: 20px; 
+                color: green; 
+                text-transform: uppercase;
+                text-align: center; 
+                margin: 0 0 35px 0; 
+                text-shadow: 0px 1px 0px #f2f2f2;
+            }
+        </style>
+    </head>
+    <body style='font-size: 20px;'>
+        <h1>PyScript Hello</h1>
+        1+2 <br> is
     <py-script>
-from utils import now, today
-import asyncio
+print(1 + 2)
 
-async def foo():
-  while True:
-    output = now()
-    pyscript.write("hora", output)
-    await asyncio.sleep(1)
-
-pyscript.run_until_complete(foo())
-pyscript.write("hoje", today())
+import sys
+print(sys.version)
     </py-script>
-  </body>
+    </body>
 </html>
